@@ -1,4 +1,4 @@
-import pygame, Space
+import pygame, Space, Bodies
 
 class simulator:
 
@@ -7,13 +7,20 @@ class simulator:
         self.is_running = None
         self.user_events_list = None
         self.space = None
+        self.bodies = {}
     
     def generate_space(self, x_length, y_length):
 
-        self.space = Space.space(x_length, y_length)
+        self.space = Space.space(x_length, y_length, self.bodies)
 
         print('A space has been created')
     
+    def add_body(self, name, width, height):
+        body = Bodies.body(width, height, self.space.surface)
+        self.space.bodies[name] = body
+
+        print('Body called ', name, ' has successfully added' )
+
     def running(self):
 
         print('Simulation has started')

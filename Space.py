@@ -2,7 +2,7 @@ import pygame
 
 class space:
 
-    def __init__(self, x_length, y_length) :
+    def __init__(self, x_length, y_length, bodies) :
         
         self.time = None
         self.time_passed = None
@@ -13,7 +13,7 @@ class space:
         self.surface_y_length = y_length
         self.surface_size = (x_length, y_length)
         self.surface = pygame.display.set_mode(self.surface_size)
-        self.bodies = []
+        self.bodies = bodies
     
     def get_time(self):
         return self.time
@@ -35,8 +35,14 @@ class space:
     def update(self):
 
         self.surface.fill('Black')
-
+        self.update_for_bodies()
         self.print_time()
+    
+    def update_for_bodies(self):
+
+        for body in self.bodies:
+            self.bodies[body].update()
+
    
     def get_x_length(self):
         return self.x_length
