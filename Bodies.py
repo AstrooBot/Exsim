@@ -13,7 +13,7 @@ class body:
         self.color = 'White'
         self.x_position = None
         self.y_position = None
-        self.speed = None
+        self.speed = 0
 
     def set_position(self, x_position, y_position):
 
@@ -21,6 +21,9 @@ class body:
         self.y_position = y_position
         self.form = pygame.draw.rect(self.surface, self.color , (self.x_position, self.y_position, self.width, self.height), 0)
         self.rect = pygame.rect.Rect(self.form)
+    
+    def mru_sim(self, time):
+        self.x_position += self.speed
 
     def set_speed(self, speed):
         self.speed = speed 
@@ -28,7 +31,8 @@ class body:
     def get_speed(self):
         return self.speed
 
-    def update(self):
-        
-        if self.x_position != None and self.y_position != None:
-            self.set_position(self.x_position, self.y_position)
+    def update(self, time):
+
+        self.mru_sim(time)
+
+        self.set_position(self.x_position, self.y_position)

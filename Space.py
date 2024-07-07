@@ -4,7 +4,7 @@ class space:
 
     def __init__(self, x_length, y_length, bodies) :
         
-        self.time = None
+        self.time = 0
         self.time_passed = None
         self.time_frame_delay = None
         self.time_clock = pygame.time.Clock()
@@ -35,15 +35,22 @@ class space:
     def update(self):
 
         self.surface.fill('Black')
-        self.update_for_bodies()
         self.print_time()
-    
+        self.update_for_bodies()
+
     def update_for_bodies(self):
 
         for body in self.bodies:
-            self.bodies[body].update()
+            self.restriction_for_movement(body)
+            self.bodies[body].update(self.time)
 
-   
+    def restriction_for_movement(self, body):
+
+        if self.bodies[body].rect.right < 0:  
+                self.bodies[body].x_position = self.surface_x_length
+        if self.bodies[body].rect.left > self.surface_x_length: 
+                self.bodies[body].x_position = 0 
+
     def get_x_length(self):
         return self.x_length
 
