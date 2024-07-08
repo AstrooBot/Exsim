@@ -4,7 +4,7 @@ class space:
 
     def __init__(self, x_length, y_length, bodies) :
         
-        self.time = 0
+        self.time = None
         self.time_passed = None
         self.time_frame_delay = None
         self.time_clock = pygame.time.Clock()
@@ -25,10 +25,11 @@ class space:
 
         self.time = pygame.time.get_ticks() - self.time_clock_started_ticks
         self.time_frame_delay = self.time_clock.get_time()
-        self.time -= self.time_frame_delay
+        self.time -= self.time_frame_delay 
 
         if self.time % 1000 == 0 and self.time != self.time_passed:
             print('Time of execution :', int(self.time/1000), ' Seconds')
+            print(self.bodies['lol2'].x_position)
 
         self.time_passed = self.time
 
@@ -49,7 +50,7 @@ class space:
         if self.bodies[body].rect.right < 0:  
                 self.bodies[body].x_position = self.surface_x_length
         if self.bodies[body].rect.left > self.surface_x_length: 
-                self.bodies[body].x_position = 0 
+                self.bodies[body].x_position = 0
 
     def get_x_length(self):
         return self.x_length
