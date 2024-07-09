@@ -4,9 +4,9 @@ class space:
 
     def __init__(self, x_length, y_length, bodies) :
         
-        self.time = None
-        self.time_passed = None
-        self.time_frame_delay = None
+        self.time = 0
+        self.time_passed = 0
+        self.time_frame_delay = 0
         self.time_clock = pygame.time.Clock()
         self.time_clock_started_ticks = pygame.time.get_ticks()
         self.surface_x_length = x_length
@@ -47,10 +47,14 @@ class space:
 
     def restriction_for_movement(self, body):
 
-        if self.bodies[body].rect.right < 0:  
-                self.bodies[body].x_position = self.surface_x_length
-        if self.bodies[body].rect.left > self.surface_x_length: 
-                self.bodies[body].x_position = 0
+#Esta monda no funciona solucionala 
+        if self.bodies[body].x_position + self.bodies[body].width > self.surface_x_length:  
+                self.bodies[body].x_position_initial = self.surface_x_length - self.bodies[body].width
+                self.bodies[body].set_speed(self.bodies[body].speed * -1, self.time)
+        if self.bodies[body].x_position  < 0 :
+                self.bodies[body].x_position_initial = 0
+                self.bodies[body].set_speed(self.bodies[body].speed * -1, self.time)
+
 
     def get_x_length(self):
         return self.x_length

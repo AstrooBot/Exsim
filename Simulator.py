@@ -20,6 +20,12 @@ class simulator:
         self.space.bodies[name] = body
 
         print('Body called ', name, ' has successfully added' )
+    
+    def set_position(self, body_name, x_position, y_position):
+        self.space.bodies[body_name].set_position(x_position, y_position)
+    
+    def set_speed(self, body_name, speed):
+        self.space.bodies[body_name].set_speed(speed, self.space.time)
 
     def running(self):
 
