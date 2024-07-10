@@ -29,7 +29,6 @@ class space:
 
         if self.time % 1000 == 0 and self.time != self.time_passed:
             print('Time of execution :', int(self.time/1000), ' Seconds')
-            print(self.bodies['lol2'].x_position)
 
         self.time_passed = self.time
 
@@ -47,14 +46,19 @@ class space:
 
     def restriction_for_movement(self, body):
 
-#Esta monda no funciona solucionala 
         if self.bodies[body].x_position + self.bodies[body].width > self.surface_x_length:  
                 self.bodies[body].x_position_initial = self.surface_x_length - self.bodies[body].width
-                self.bodies[body].set_speed(self.bodies[body].speed * -1, self.time)
+                self.bodies[body].set_speed(self.bodies[body].speed[0] * -1, self.bodies[body].speed[1], self.time)
         if self.bodies[body].x_position  < 0 :
                 self.bodies[body].x_position_initial = 0
-                self.bodies[body].set_speed(self.bodies[body].speed * -1, self.time)
+                self.bodies[body].set_speed(self.bodies[body].speed[0] * -1, self.bodies[body].speed[1], self.time)
 
+        if self.bodies[body].y_position + self.bodies[body].height > self.surface_y_length:  
+                self.bodies[body].y_position_initial = self.surface_y_length - self.bodies[body].height
+                self.bodies[body].set_speed(self.bodies[body].speed[0], self.bodies[body].speed[1] * -1, self.time)
+        if self.bodies[body].y_position  < 0 :
+                self.bodies[body].y_position_initial = 0
+                self.bodies[body].set_speed(self.bodies[body].speed[0], self.bodies[body].speed[1] * -1, self.time)
 
     def get_x_length(self):
         return self.x_length

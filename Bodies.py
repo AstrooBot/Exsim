@@ -15,7 +15,7 @@ class body:
         self.x_position_initial = None
         self.y_position = None
         self.y_position_initial = None
-        self.speed = 0
+        self.speed = (0,0)
         self.time_started_movement = 0
     
     def initial_positions(self, x_position, y_position):
@@ -32,12 +32,15 @@ class body:
         self.form = pygame.draw.rect(self.surface, self.color , (self.x_position, self.y_position, self.width, self.height), 0)
         self.rect = pygame.rect.Rect(self.form)
 
-    def mru_sim(self, time):
+    def mru_sim_x(self, time):
 
-        self.x_position = self.x_position_initial + self.speed * ((time - self.time_started_movement) /1000)
+        self.x_position = self.x_position_initial + self.speed[0] * ((time - self.time_started_movement) /1000)
 
-    def set_speed(self, speed, time):
-        self.speed = speed 
+    def mru_sim_y(self, time):   
+        self.y_position = self.y_position_initial + self.speed[1] * ((time - self.time_started_movement) /1000)
+
+    def set_speed(self, speed_x, speed_y, time):
+        self.speed = (speed_x, speed_y)
         self.time_started_movement = time
 
     def get_speed(self):
@@ -45,5 +48,6 @@ class body:
 
     def update(self, time):
 
-        self.mru_sim(time)
+        self.mru_sim_x(time)
+        self.mru_sim_y(time)
         self.set_position(self.x_position, self.y_position)
