@@ -1,4 +1,5 @@
-import pygame
+import pygame, math
+
 
 class space:
 
@@ -29,6 +30,8 @@ class space:
 
         if self.time % 1000 == 0 and self.time != self.time_passed:
             print('Time of execution :', int(self.time/1000), ' Seconds')
+            print(self.bodies['lol'].x_speed, self.bodies['lol'].y_speed, self.bodies['lol'].speed)
+            
 
         self.time_passed = self.time
 
@@ -41,25 +44,35 @@ class space:
     def update_for_bodies(self):
 
         for body in self.bodies:
-            self.restriction_for_movement(body)
             self.bodies[body].update(self.time)
+            self.restriction_for_movement(body)
+  
 
     def restriction_for_movement(self, body):
 
         if self.bodies[body].x_position + self.bodies[body].width > self.surface_x_length:  
-                self.bodies[body].x_position_initial = self.surface_x_length - self.bodies[body].width
-                self.bodies[body].set_speed(self.bodies[body].speed[0] * -1, self.bodies[body].speed[1], self.time)
-        if self.bodies[body].x_position  < 0 :
+                self.bodies[body].x_position_initial = self.surface_x_length - self.bodies[body].width 
+                self.bodies[body].y_position_initial = self.bodies[body].y_position
+                self.bodies[body].set_time_started_movement(self.time)
+                self.bodies[body].x_speed *= - 1           
+
+        if self.bodies[body].x_position < 0 :
                 self.bodies[body].x_position_initial = 0
-                self.bodies[body].set_speed(self.bodies[body].speed[0] * -1, self.bodies[body].speed[1], self.time)
+                self.bodies[body].y_position_initial = self.bodies[body].y_position
+                self.bodies[body].set_time_started_movement(self.time)
+                self.bodies[body].x_speed *= - 1
 
         if self.bodies[body].y_position + self.bodies[body].height > self.surface_y_length:  
                 self.bodies[body].y_position_initial = self.surface_y_length - self.bodies[body].height
-                self.bodies[body].set_speed(self.bodies[body].speed[0], self.bodies[body].speed[1] * -1, self.time)
+                self.bodies[body].x_position_initial = self.bodies[body].x_position 
+                self.bodies[body].set_time_started_movement(self.time)
+                self.bodies[body].y_speed *= - 1
         if self.bodies[body].y_position  < 0 :
                 self.bodies[body].y_position_initial = 0
-                self.bodies[body].set_speed(self.bodies[body].speed[0], self.bodies[body].speed[1] * -1, self.time)
-
+                self.bodies[body].x_position_initial = self.bodies[body].x_position 
+                self.bodies[body].set_time_started_movement(self.time)
+                self.bodies[body].y_speed *= - 1
+                
     def get_x_length(self):
         return self.x_length
 
@@ -71,3 +84,4 @@ class space:
 
     def get_body_position_respect_to(self, body1, body2):
         pass
+    

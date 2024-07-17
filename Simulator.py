@@ -1,4 +1,4 @@
-import pygame, Space, Bodies
+import pygame, math, Space, Bodies
 
 class simulator:
 
@@ -8,6 +8,14 @@ class simulator:
         self.user_events_list = None
         self.space = None
         self.bodies = {}
+    
+    def rad_to_deg(self, rad):
+         deg = rad * 180 / math.pi
+         return deg 
+    
+    def deg_to_rad(self, deg):
+        rad = deg * (math.pi / 180)
+        return rad 
     
     def generate_space(self, x_length, y_length):
 
@@ -24,8 +32,12 @@ class simulator:
     def set_position(self, body_name, x_position, y_position):
         self.space.bodies[body_name].set_position(x_position, y_position)
     
-    def set_speed(self, body_name, speed_x, speed_y):
-        self.space.bodies[body_name].set_speed(speed_x, speed_y, self.space.time)
+    def set_angle(self, body_name, body_angle):
+         body_angle = self.deg_to_rad(body_angle)
+         self.space.bodies[body_name].set_angle(body_angle, self.space.time)
+
+    def set_speed(self, body_name, body_speed):
+         self.space.bodies[body_name].set_speed(body_speed, self.space.time)
 
     def running(self):
 
