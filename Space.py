@@ -30,8 +30,6 @@ class space:
 
         if self.time % 1000 == 0 and self.time != self.time_passed:
             print('Time of execution :', int(self.time/1000), ' Seconds')
-            print(self.bodies['lol'].x_speed, self.bodies['lol'].y_speed, self.bodies['lol'].speed)
-            
 
         self.time_passed = self.time
 
@@ -46,7 +44,6 @@ class space:
         for body in self.bodies:
             self.bodies[body].update(self.time)
             self.restriction_for_movement(body)
-  
 
     def restriction_for_movement(self, body):
 

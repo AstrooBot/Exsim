@@ -16,8 +16,8 @@ class body:
         self.x_position_initial = None
         self.y_position = None
         self.y_position_initial = None
-        self.x_speed = None
-        self.y_speed = None
+        self.x_speed = 0
+        self.y_speed = 0
         self.speed = 0
         self.time_started_movement = 0
     
