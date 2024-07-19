@@ -34,11 +34,16 @@ class simulator:
     
     def set_angle(self, body_name, body_angle):
          body_angle = self.deg_to_rad(body_angle)
-         self.space.bodies[body_name].set_angle(body_angle, self.space.time)
+         self.space.bodies[body_name].set_angle(body_angle)
+         self.space.bodies[body_name].set_time_started_movement(self.space.time)
 
     def set_speed(self, body_name, body_speed):
-         self.space.bodies[body_name].set_speed(body_speed, self.space.time)
+         self.space.bodies[body_name].set_speed(body_speed)
+         self.space.bodies[body_name].set_time_started_movement(self.space.time)
 
+    def set_acceleration(self, body_name, body_acceleration):
+        self.space.bodies[body_name].set_acceleration(body_acceleration)
+        self.space.bodies[body_name].set_time_started_movement(self.space.time)
     def running(self):
 
         print('Simulation has started')

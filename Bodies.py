@@ -19,7 +19,10 @@ class body:
         self.x_speed = 0
         self.y_speed = 0
         self.speed = 0
-        self.time_started_movement = 0
+        self.acceleration = 0
+        self.x_acceleration = 0
+        self.y_acceleration = 0
+        self.time_started_movement = None
     
     def initial_positions(self, x_position, y_position):
 
@@ -36,25 +39,32 @@ class body:
         self.rect = pygame.rect.Rect(self.form)
 
     def set_time_started_movement(self, time):
+        
         self.time_started_movement = time
 
-    def set_angle(self, angle, time):
+    def set_angle(self, angle):
         self.angle = angle
-        self.set_speed(self.speed, time)
+        self.set_speed(self.speed)
         
-    def set_speed(self, speed, time):
+    def set_speed(self, speed):
         self.x_speed = speed * math.cos(self.angle)
         self.y_speed = speed * math.sin(self.angle)
         self.speed = speed
-        self.set_time_started_movement(time)
-        
-    def mru_sim_x(self, time):
 
-        self.x_position = self.x_position_initial + self.x_speed * ((time - self.time_started_movement) /1000)
+    def set_acceleration(self, acceleration):
+
+        self.acceleration = acceleration
+        self.x_acceleration = acceleration * math.cos(self.angle)
+        self.y_acceleration = acceleration * math.sin(self.angle)
+        
+
+    def mru_sim_x(self, time):
+        time = ((time - self.time_started_movement) /1000)
+        self.x_position = self.x_position_initial + self.x_speed * time + 1/2 * (self.x_acceleration * time ** 2)
 
     def mru_sim_y(self, time):   
-
-        self.y_position = self.y_position_initial + self.y_speed * ((time - self.time_started_movement) /1000)
+        time = ((time - self.time_started_movement) /1000)
+        self.y_position = self.y_position_initial + self.y_speed * time + 1/2 * (self.y_acceleration * time ** 2)
 
     def get_speed(self):
         return self.speed
