@@ -23,6 +23,7 @@ class body:
         self.x_acceleration = 0
         self.y_acceleration = 0
         self.time_started_movement = None
+        self.gravity = 0
     
     def initial_positions(self, x_position, y_position):
 
@@ -56,6 +57,11 @@ class body:
         self.acceleration = acceleration
         self.x_acceleration = acceleration * math.cos(self.angle)
         self.y_acceleration = acceleration * math.sin(self.angle)
+
+    def set_gravity(self, time):
+        self.gravity = - 1/2 * (9.81 * (time ** 2))
+
+        return self.gravity
         
 
     def mru_sim_x(self, time):
@@ -64,7 +70,15 @@ class body:
 
     def mru_sim_y(self, time):   
         time = ((time - self.time_started_movement) /1000)
-        self.y_position = self.y_position_initial + self.y_speed * time + 1/2 * (self.y_acceleration * time ** 2)
+        self.y_position = self.y_position_initial + self.y_speed * time + 1/2 * (self.y_acceleration * time ** 2) + self.set_gravity(time)
+        if self.y_speed * time + 1/2 * (self.y_acceleration * time ** 2) + self.set_gravity(time) == 0:
+            extra_time = time
+        else: 
+            extra_time = 0
+        if self.y_position < 0 and extra_time != 0:
+            self.y_speed += 9.81 * extra_time
+        elif self.y_position < 0:
+            self.y_speed += 9.81 * time
 
     def get_speed(self):
         return self.speed

@@ -3,10 +3,10 @@ import Simulator
 exsim = Simulator.simulator()
 exsim.generate_space(1000,1000)
 exsim.add_body('lol', 70,70)
-exsim.set_position('lol', 0, 0)
-exsim.set_angle('lol', 0)
+exsim.set_position('lol', 500, 100)
+exsim.set_angle('lol', -90)
 
-exsim.set_acceleration('lol', 10)
+
 """exsim.add_body('lol2', 100,100)
 exsim.set_position('lol2', 1000, 0)
 exsim.set_speed('lol2', - 200, - 200)

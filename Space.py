@@ -30,7 +30,7 @@ class space:
 
         if self.time % 1000 == 0 and self.time != self.time_passed:
             print('Time of execution :', int(self.time/1000), ' Seconds')
-            print(self.bodies['lol'].x_speed, self.bodies['lol'].x_acceleration)
+
         self.time_passed = self.time
 
     def update(self):
@@ -51,8 +51,9 @@ class space:
         speed.append( 1/2 * (self.bodies[body].x_acceleration * time ** 2))
         speed.append( 1/2 * (self.bodies[body].y_acceleration * time ** 2))
         return speed
-
+    
     def restriction_for_movement(self, body):
+
 
         if self.bodies[body].x_position + self.bodies[body].width > self.surface_x_length:  
                 self.bodies[body].x_position_initial = self.surface_x_length - self.bodies[body].width 
@@ -70,7 +71,6 @@ class space:
                 self.bodies[body].x_acceleration *= - 1
                 self.bodies[body].x_speed += self.elastic_border_collision(body, self.time)[0]
  
-
         if self.bodies[body].y_position + self.bodies[body].height > self.surface_y_length:  
                 self.bodies[body].y_position_initial = self.surface_y_length - self.bodies[body].height
                 self.bodies[body].x_position_initial = self.bodies[body].x_position 
