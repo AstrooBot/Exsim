@@ -3,8 +3,9 @@ import Simulator
 exsim = Simulator.simulator()
 exsim.generate_space(1000,1000)
 exsim.add_body('lol', 70,70)
-exsim.set_position('lol', 500, 100)
+exsim.set_position('lol', 500, 500)
 exsim.set_angle('lol', -90)
+
 
 
 """exsim.add_body('lol2', 100,100)

@@ -23,7 +23,9 @@ class body:
         self.x_acceleration = 0
         self.y_acceleration = 0
         self.time_started_movement = None
-        self.gravity = 0
+        self.maximus_elevation = None
+        self.counter = 0
+        self.GRAVITY = 9.81
     
     def initial_positions(self, x_position, y_position):
 
@@ -31,6 +33,8 @@ class body:
             self.x_position_initial = x_position
         if self.y_position == None:
             self.y_position_initial = y_position
+        if self.maximus_elevation == None:
+            self.maximus_elevation = y_position
             
     def set_position(self, x_position, y_position):
         self.initial_positions(x_position, y_position)        
@@ -56,32 +60,35 @@ class body:
 
         self.acceleration = acceleration
         self.x_acceleration = acceleration * math.cos(self.angle)
-        self.y_acceleration = acceleration * math.sin(self.angle)
-
-    def set_gravity(self, time):
-        self.gravity = - 1/2 * (9.81 * (time ** 2))
-
-        return self.gravity
-        
+        self.y_acceleration = acceleration * math.sin(self.angle)        
 
     def mru_sim_x(self, time):
         time = ((time - self.time_started_movement) /1000)
-        self.x_position = self.x_position_initial + self.x_speed * time + 1/2 * (self.x_acceleration * time ** 2)
-
+        self.x_position = self.x_position_initial + 1/2 * (self.get_x_current_speed(time) + self.x_speed) * time
+    
     def mru_sim_y(self, time):   
-        time = ((time - self.time_started_movement) /1000)
-        self.y_position = self.y_position_initial + self.y_speed * time + 1/2 * (self.y_acceleration * time ** 2) + self.set_gravity(time)
-        if self.y_speed * time + 1/2 * (self.y_acceleration * time ** 2) + self.set_gravity(time) == 0:
-            extra_time = time
-        else: 
-            extra_time = 0
-        if self.y_position < 0 and extra_time != 0:
-            self.y_speed += 9.81 * extra_time
-        elif self.y_position < 0:
-            self.y_speed += 9.81 * time
+        time = ((time - self.time_started_movement ) /1000)
+        #self.get_maximus_elevation(time)
+        self.y_position = self.y_position_initial + 1/2 * (self.get_y_current_speed(time) + self.y_speed) * time
+    
+    def get_x_current_speed(self, time):
+        x_current_speed = self.x_speed + self.x_acceleration * time
+        return x_current_speed
+    
+    def get_y_current_speed(self, time):
+        y_current_speed = self.y_speed + self.y_acceleration * time - self.get_gravity_action(time)
+        return y_current_speed
+    
+    def get_gravity_action(self, time):
+        gravity_acceleration = - self.GRAVITY * time
+        return gravity_acceleration
 
-    def get_speed(self):
-        return self.speed
+    def get_maximus_elevation(self, time):
+        if int(self.get_y_current_speed(time)) == 0 :
+            self.maximus_elevation = self.y_position
+            print('lol')
+            
+
 
     def update(self, time):
 
